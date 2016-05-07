@@ -33,3 +33,9 @@ make
 make check
 sudo make install
 sudo ldconfig
+
+#
+# Tools 
+# -----
+
+sudo yum install tree
