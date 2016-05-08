@@ -47,3 +47,9 @@ sudo yum install tree
 
 ssh-keygen -t rsa -b 4096 -C "maxime.ransan@gmail.com" 
 ssh-add ~/.ssh/id_rsa 
+
+#
+# 
+# Setup Docker
+
+sudo usermod -aG docker ec2-user
