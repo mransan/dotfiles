@@ -18,3 +18,7 @@ export HISTFILESIZE=100000
 #
 #
 . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+alias truncdir='pwd'
+PS1='\[\033[0;32m\]\u@\h:\[\033[0;36m\]`truncdir`\n\[\033[00m\]\$ '
+

@@ -39,3 +39,17 @@ sudo ldconfig
 # -----
 
 sudo yum install tree
+
+#
+#
+# SSH keys for github ...
+# -----------------------
+
+ssh-keygen -t rsa -b 4096 -C "maxime.ransan@gmail.com" 
+ssh-add ~/.ssh/id_rsa 
+
+#
+# 
+# Setup Docker
+
+sudo usermod -aG docker ec2-user
