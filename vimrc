@@ -7,6 +7,7 @@ set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set colorcolumn=80
 
 set number
 
