@@ -39,7 +39,7 @@ sudo ldconfig
 # Tools 
 # -----
 
-sudo yum install tree
+sudo  yum install tree
 
 #
 #
