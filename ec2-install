@@ -4,6 +4,7 @@
 # OPAM 
 # ----
 
+sudo yum install make 
 sudo yum install m4 
 sudo yum install gcc
 sudo yum install git

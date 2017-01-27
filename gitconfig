@@ -3,3 +3,5 @@
 # Please adapt and uncomment the following lines:
 	name = Maxime Ransan
 	email = maxime.ransan@gmail.com
+[push]
+	default = simple
