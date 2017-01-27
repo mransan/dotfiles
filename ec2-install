@@ -7,6 +7,7 @@
 sudo yum install m4 
 sudo yum install gcc
 sudo yum install git
+sudo yum install unzip
 
 wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin
 
@@ -17,17 +18,17 @@ sudo yum install ncurses-devel
 # Protobuf Development installation
 # ---------------------------------
 
-wget https://github.com/google/protobuf/releases/download/v3.0.0-beta-2/protobuf-cpp-3.0.0-beta-2.tar.gz 
-tar xzvf protobuf-cpp-3.0.0-beta-2.tar.gz 
+PB_VERSION=3.1.0
+wget https://github.com/google/protobuf/releases/download/v3.1.0/protobuf-cpp-$PB_VERSION.tar.gz
+tar xzvf protobuf-cpp-$PB_VERSION.tar.gz 
 
 sudo yum install autoconf
 sudo yum install automake
 sudo yum install libtool
 sudo yum install g++ 
-sudo yum install unzip
 sudo yum install gcc-c++ 
 
-cd protobuf-3.0.0-beta-2/
+cd protobuf-$PB_VERSION
 ./configure
 make
 make check
