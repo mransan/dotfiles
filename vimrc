@@ -1,3 +1,9 @@
+" How to execute the current buffer/selection 
+" :.w !bash 
+
+" How to pipe the command output in the current buffer
+" :r! cmd 
+
 syntax on
 colorscheme torte
 

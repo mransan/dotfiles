@@ -37,6 +37,23 @@ sudo make install
 sudo ldconfig
 
 #
+# Rocks DB development installation
+# --------------
+export ROCKS_VERSION=4.13.5
+wget https://github.com/facebook/rocksdb/archive/v$ROCKS_VERSION.tar.gz
+tar xzvf v$ROCKS_VERSION.tar.gz 
+cd rocksdb-$ROCKS_VERSION/
+sudo apt-get install libgflags-dev 
+sudo apt-get install libsnappy-dev 
+sudo apt-get install zlib1g-dev 
+sudo apt-get install libbz2-dev 
+sudo apt-get install libzstd-dev 
+make static_lib 
+#make share_lib 
+sudo make install
+
+
+#
 # Tools 
 # -----
 

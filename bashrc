@@ -1,8 +1,11 @@
+set -o vi
 #
 # history search using up/down
 #
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
+bind '"OA": history-search-backward'
+bind '"OB": history-search-forward'
 
 #
 # don't put duplicate lines in the history. See bash(1) for more options
