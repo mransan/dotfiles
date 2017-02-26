@@ -54,6 +54,8 @@ nnoremap <leader>cf :set foldlevel=-1<cr>
 nnoremap gps :!git push<cr>
 nnoremap gpl :!git pull<cr>
 nnoremap gco :!git checkout %<cr>
+nnoremap gst :!git status<cr>
+nnoremap gdf :!git difftool<cr>
 
 "autocmd BufWritePre * :%s/ *$//g
   "Remove all the trailing spaces upon closing the file

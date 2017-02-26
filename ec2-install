@@ -64,8 +64,15 @@ sudo  yum install tree
 # SSH keys for github ...
 # -----------------------
 
+# check if ~/.ssh/id_rsa is not present already 
+# if not then generated using the 2 command below
+
 ssh-keygen -t rsa -b 4096 -C "maxime.ransan@gmail.com" 
 ssh-add ~/.ssh/id_rsa 
+
+# Copy content of public key: ~/.ssh/id_rsa.pub to 
+# the gitbub account
+# https://github.com/settings/keys
 
 #
 # 
