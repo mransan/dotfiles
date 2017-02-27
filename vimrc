@@ -46,8 +46,19 @@ nnoremap <leader>em :vnew ./Makefile<cr>
 
 nnoremap <leader>d( di(
 nnoremap <leader>d{ di{
+
+" Code folding 
+" ------------
 nnoremap <leader>of :set foldlevel=99<cr>
 nnoremap <leader>cf :set foldlevel=-1<cr>
+
+" Surround selection with character pair
+" --------------------------------------
+vnoremap <leader>"  di""<esc><left>p
+vnoremap <leader>'  di''<esc><left>p
+vnoremap <leader>(  di()<esc><left>p
+vnoremap <leader>{  di{}<esc><left>p
+vnoremap <leader>`  di``<esc><left>p
 
 " Git key mapping
 " ---------------

@@ -1,3 +1,16 @@
+Options Postfix
+--------------
+
+* `?`: output the value 
+* `!`: flip a boolean value 
+* `&`: reset to default value
+
+```vim
+:set wrap?
+:set wrap!
+:set wrap& 
+```
+
 External Commands 
 -----------------
 
