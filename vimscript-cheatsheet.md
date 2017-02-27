@@ -69,13 +69,13 @@ to have different runtime behavior based on a user setting, vim provide case
 and non-case sensitive boolean operators. Suffix `#` means case-sensitive, 
 while `?` means case-insensitive.
 
-```
+```vim
 		            use 'ignorecase'    match case	   ignore case ~
 equal			             ==		            ==#		          ==?
 not equal		           !=		            !=#		          !=?
 ```
 
-> for more operators see `:help ==#
+> for more operators see `:help ==#`
 
 Number coersion. Vim will try to coerse a type to a number in an arithmetic 
 expression.
@@ -85,4 +85,29 @@ expression.
 :echo a
 ```
 will print 30
+
+Functions
+---------
+
+**definition**
+
+```vim
+:function <Capitalize function name>(<arguments>) 
+:  <statements>
+:  return <expression>
+:endfunction
+```
+
+**call**
+
+```vim
+:call <function name>(<arguments>)
+:<cmd> <function name>(<arguments>) 
+```
+Using `:call` ignores the return value. Functions which returns a value can 
+be invoked as expression. (ie as argument to other function, let-bindings...).
+
+> Note that function name are **capitalized**.
+
+> Note that when a function returns nothing, it still returns `0`.
 
