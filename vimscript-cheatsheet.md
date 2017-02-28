@@ -111,3 +111,28 @@ be invoked as expression. (ie as argument to other function, let-bindings...).
 
 > Note that when a function returns nothing, it still returns `0`.
 
+**arguments**
+
+One specific syntax of vimscript is that when using an argument value in a
+statement or expression, one must prefix it with `a:`. For instance:
+
+```vim
+:function MyF(x) 
+: echo a:x
+:endfunction
+```
+Without the `a:` prefix, `x` is an undefined variable.
+
+Vim functions are variadic: 
+```vim 
+:function MyF(foo, ...) 
+:   echo a:foo
+:   echo a:0
+:   echo a:1
+:   echo a:000
+:endfunction
+``` 
+
+`a:000` is a special function argument which is the list of all the variadic 
+function argument (So not including `foo` in the example above). 
+
