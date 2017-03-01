@@ -1,0 +1,61 @@
+targets:
+	mkdir targets
+
+targets/apt: targets
+	sudo apt-get update 
+	sudo apt-get --yes install make \
+                             m4 \
+                             gcc \
+                             git \
+                             unzip \
+                             libncurses5-dev \
+                             autoconf \
+                             automake \
+                             libtool \
+                             g++ \
+                             libgflags-dev   \
+                             libsnappy-dev   \
+                             zlib1g-dev   \
+                             libbz2-dev
+	touch $@
+
+targets/opam: targets/apt
+	wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh \
+     -O - | sh -s /usr/local/bin
+	touch $@
+
+GITHUB=https://github.com/
+PB_VERSION=3.1.0
+PB_DIR=protobuf-$(PB_VERSION)
+
+targets/protobuf: targets/apt
+	wget $(GITHUB)/google/protobuf/releases/download/v$(PB_VERSION)/protobuf-cpp-$(PB_VERSION).tar.gz
+	tar xzvf protobuf-cpp-$(PB_VERSION).tar.gz
+	cd $(PB_DIR) && ./configure
+	cd $(PB_DIR) && make
+	cd $(PB_DIR) && $(MAKE) check
+	cd $(PB_DIR) && sudo $(MAKE) install
+	cd $(PB_DIR) && sudo ldconfig 
+	touch $@
+
+targets/zstd: targets/apt
+	wget $(GITHUB)/facebook/zstd/archive/v1.1.3.tar.gz  
+	mv v1.1.3.tar.gz zstd-1.1.3.tar.gz  
+	tar zxvf zstd-1.1.3.tar.gz  
+	cd zstd-1.1.3 && $(MAKE) && sudo $(MAKE) install 
+	touch $@ 
+
+ROCKS_VERSION=4.13.5 
+
+targets/rocksdb: targets/apt targets/zstd
+	wget $(GITHUB)/facebook/rocksdb/archive/v$ROCKS_VERSION.tar.gz  
+	tar xzvf v$(ROCKS_VERSION).tar.gz   
+	cd rocksdb-$(ROCKS_VERSION)/ && $(MAKE) static_lib   
+	cd rocksdb-$(ROCKS_VERSION)/ && sudo $(MAKE) install 
+	cd rocksdb-$(ROCKS_VERSION)/ && $(MAKE) share_lib   
+	cd rocksdb-$(ROCKS_VERSION)/ && sudo $(MAKE) install
+	touch $@
+
+.PHONY: all
+
+all: targets/opam targets/protobuf targets/rocksdb
