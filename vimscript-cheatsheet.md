@@ -1,7 +1,7 @@
-Variables 
+Variables
 ---------
 
-**let binding** 
+**let binding**
 ```vim
 :let my_variable = 12
 :let my_variable = "twelve"
@@ -9,64 +9,64 @@ Variables
 
 **options as variables**
 
-Vim option (like `wrap`) can work as variable, and for this they need to 
+Vim option (like `wrap`) can work as variable, and for this they need to
 be prefixed with `&`.
 
-```vim 
+```vim
 :echo &wrap
-:let &textwidth = &textwidth + 10 
+:let &textwidth = &textwidth + 10
 ```
 > In the second line, the textwidth option is actually a statement rather than
 > an expression as it produces the side effect of modifying the `textwidth`
-> option in vim. 
+> option in vim.
 
 To set a local option (ie equivalent to `:set local ...`) then prefix with
 `l:`. For instance:
 
-```vim 
+```vim
 :let &l:wrap = 1
 ```
 
-**types** 
+**types**
 
-* "int" 
-* "string" 
+* "int"
+* "string"
 
-> Note for boolean vim uses int. `> 0 `is `true` and `0` is `false`. 
+> Note for boolean vim uses int. `> 0 `is `true` and `0` is `false`.
 
 **registers as variables**
 
 Vim registers (ie see `:registers`) can also be used as variable.
 
-```vim 
+```vim
 :let @a = "hello"
 ```
 > This is also a statement since the register is a reference and it produces
-> the side effect of modifying the register. 
+> the side effect of modifying the register.
 
 Conditionals
 ------------
 
-**if elesif else endif** 
+**if elesif else endif**
 
-```vim 
+```vim
 if <expr>
   <statement>
 elseif <expr>
   <statement>
-else 
+else
   <statement>
-endif  
+endif
 ```
 
-> `if` syntax is line based for the `then` case. 
+> `if` syntax is line based for the `then` case.
 
 **boolean expressions**
 
-One of the big problem with vim is the **case sensitivity** of the `==` 
+One of the big problem with vim is the **case sensitivity** of the `==`
 operator. It depends on the vim option `ignorecase`. In order to avoid script
 to have different runtime behavior based on a user setting, vim provide case
-and non-case sensitive boolean operators. Suffix `#` means case-sensitive, 
+and non-case sensitive boolean operators. Suffix `#` means case-sensitive,
 while `?` means case-insensitive.
 
 ```vim
@@ -77,10 +77,10 @@ not equal		           !=		            !=#		          !=?
 
 > for more operators see `:help ==#`
 
-Number coersion. Vim will try to coerse a type to a number in an arithmetic 
+Number coersion. Vim will try to coerse a type to a number in an arithmetic
 expression.
 
-```vim 
+```vim
 :let a = "20hello" + 10
 :echo a
 ```
@@ -92,7 +92,7 @@ Functions
 **definition**
 
 ```vim
-:function <Capitalize function name>(<arguments>) 
+:function <Capitalize function name>(<arguments>)
 :  <statements>
 :  return <expression>
 :endfunction
@@ -102,9 +102,9 @@ Functions
 
 ```vim
 :call <function name>(<arguments>)
-:<cmd> <function name>(<arguments>) 
+:<cmd> <function name>(<arguments>)
 ```
-Using `:call` ignores the return value. Functions which returns a value can 
+Using `:call` ignores the return value. Functions which returns a value can
 be invoked as expression. (ie as argument to other function, let-bindings...).
 
 > Note that function name are **capitalized**.
@@ -117,22 +117,36 @@ One specific syntax of vimscript is that when using an argument value in a
 statement or expression, one must prefix it with `a:`. For instance:
 
 ```vim
-:function MyF(x) 
+:function MyF(x)
 : echo a:x
 :endfunction
 ```
 Without the `a:` prefix, `x` is an undefined variable.
 
-Vim functions are variadic: 
-```vim 
-:function MyF(foo, ...) 
+Vim functions are variadic:
+```vim
+:function MyF(foo, ...)
 :   echo a:foo
 :   echo a:0
 :   echo a:1
 :   echo a:000
 :endfunction
-``` 
+```
 
-`a:000` is a special function argument which is the list of all the variadic 
-function argument (So not including `foo` in the example above). 
+`a:000` is a special function argument which is the list of all the variadic
+function argument (So not including `foo` in the example above).
 
+> Function arguments are immutable, attempt to assign a value will raise
+> an error
+
+**strings**
+
+* `.` for concatenation. (`+` is solely for number and will trigger coersion
+  of its arguments).
+> `.` will coerse its argument to a string. (i.e. 10 -> "10", but not floating
+> point numbers
+
+* strlen(s) : returns the length
+* split(s), split(s, separator) : splits the string in a list of string
+* join(l, separator)
+* tolower/toupper: modify the case of `s`

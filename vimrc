@@ -25,7 +25,6 @@ set linebreak
 set wrap
 
 
-
 " Key Mappings
 " ------------
 nnoremap <space> viw
@@ -68,6 +67,12 @@ nnoremap gco :!git checkout %<cr>
 nnoremap gst :!git status<cr>
 nnoremap gdf :!git difftool<cr>
 
+" Grep
+" ----
+nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " src"<cr>:copen<cr> 
+nnoremap <leader>n cn
+nnoremap <leader>p cN
+
 "autocmd BufWritePre * :%s/ *$//g
   "Remove all the trailing spaces upon closing the file
 
@@ -86,6 +91,46 @@ augroup end
 cmap fb<Space> FufBuffer<CR>
 cmap ff<Space> FufFile<CR>
 
+" Wraps the current selection with the start/end OCaml comment markers, 
+" ie '(*' and '*)'
+function! OCamlComment()
+  "the logic is to go first at the end of the section, insert the 
+  "end marker, go to the beginning of the selection and insert the 
+  "start marker. 
+  "
+  "Note that it's important to insert first the end marker so as not to 
+  "corrupt the location of the start of the selection (ie '`<') 
+  execute "normal! \<esc>`>a*)\<esc>`<i(*\<esc>"
+endfunction
+
+" Remove the closest start and end OCaml comment markers from the 
+" cursor location. 
+"
+" Note that this function does not handle correctly nested comments. 
+"
+"          (* blah blah (* foo foo *) blah *)
+"                                     ^
+"                                   cursor
+" The example above would not work
+function! OCamlUnComment()
+
+  "select the entire comment including the start/end markers by 
+  "searching first backward for the marker '(*' and then forward for the 
+  "'*)' marker. 
+  "
+  "Note that this methodology is not robust enough to handle nested 
+  "comments.
+  execute "normal! ?(\\*\<cr>v/\\*)\<cr>\<right>\<esc>"
+
+  "select the content of the comment (excluding the start/end markers)
+  execute "normal!  `<\<right>\<right>v`>\<left>\<left>"
+
+  "copy the selected content, delete the comment start and end markers, 
+  "paste the comment content
+  execute "normal! \"hd\<esc>\<left>\<left>xxxx\"hP\<esc>"
+
+endfunction
+
 " OCaml specific stuf {{{
 " ------------------------
 augroup filetype_ocaml
@@ -95,6 +140,8 @@ augroup filetype_ocaml
   autocmd FileType ocaml :iabbrev <buffer> --> -> begin <cr>end<up><esc>$i
   autocmd FileType ocaml setlocal foldmethod=indent
   autocmd FileType ocaml setlocal foldlevel=99 
+  autocmd FileType ocaml :vnoremap <buffer> <leader>c :<c-u>call OCamlComment()<cr>
+  autocmd FileType ocaml :nnoremap <buffer> <leader>x :<c-u>call OCamlUnComment()<cr>
 augroup end 
 "}}}
 
