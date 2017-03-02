@@ -70,8 +70,8 @@ nnoremap gdf :!git difftool<cr>
 " Grep
 " ----
 nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " src"<cr>:copen<cr> 
-nnoremap <leader>n cn
-nnoremap <leader>p cN
+nnoremap <leader>n :cn<cr>
+nnoremap <leader>p :cN<cr>
 
 "autocmd BufWritePre * :%s/ *$//g
   "Remove all the trailing spaces upon closing the file
