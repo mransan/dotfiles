@@ -18,12 +18,15 @@ $(TARGETS)/apt: $(TARGETS)
                              libgflags-dev   \
                              libsnappy-dev   \
                              zlib1g-dev   \
+                             libev-dev   \
                              libbz2-dev
 	touch $@
 
 $(TARGETS)/opam: $(TARGETS)/apt
 	wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh \
      -O - | sh -s /usr/local/bin
+	opam switch --yes 4.04.0 
+	opam install --yes result depext mtime ptime ocplib-endian>=1.0 lwt 
 	touch $@
 
 GITHUB=https://github.com
@@ -75,13 +78,11 @@ $(TARGETS)/raft-pb.git: $(TARGETS)/apt $(TARGETS)/opam
 
 $(TARGETS)/raft-rocks.git: $(TARGETS)/apt $(TARGETS)/opam
 	git clone $(GITHUB)/mransan/raft-rocks.git raft-rocks.git
-	opam install ocplib-endian.1.0
 	cd raft-rocks.git && opam pin add --yes raft-rocks ./ 
 	touch $@
 
 $(TARGETS)/raft-udp.git: $(TARGETS)/apt $(TARGETS)/opam
 	git clone $(GITHUB)/mransan/raft-udp.git raft-udp.git
-	opam install lwt mtime ptime 
 	cd raft-udp.git && make 
 	touch $@
 
