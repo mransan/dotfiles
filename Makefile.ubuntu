@@ -1,9 +1,6 @@
 TARGETS=$(HOME)/targets
 
-$(TARGETS):
-	mkdir $(TARGETS)
-
-$(TARGETS)/apt: $(TARGETS)
+$(TARGETS)/apt:
 	sudo apt-get update 
 	sudo apt-get --yes install make \
                              m4 \
@@ -26,7 +23,8 @@ $(TARGETS)/opam: $(TARGETS)/apt
 	wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh \
      -O - | sh -s /usr/local/bin
 	opam switch --yes 4.04.0 
-	opam install --yes result depext mtime ptime ocplib-endian>=1.0 lwt 
+	opam install --yes result depext mtime ptime ocplib-endian>=1.0 conf-libev \
+		lwt
 	touch $@
 
 GITHUB=https://github.com
