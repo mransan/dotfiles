@@ -150,3 +150,17 @@ function argument (So not including `foo` in the example above).
 * split(s), split(s, separator) : splits the string in a list of string
 * join(l, separator)
 * tolower/toupper: modify the case of `s`
+
+
+Binding
+-------
+
+**<c-u> before 'call'**
+When creating a binding which calls a function, one must be careful to 
+precede `call` with `<c-u>`. This clears the cmd line which could have 
+been populated with `<,>` in visual mode:
+```
+:vnoremap <leader>c :<c-u>call OCamlUnComment()<cr>
+``` 
+In the example above the OCamlUnComment() function does not work 
+on the selection `<,>` so better to clear it.

@@ -113,6 +113,7 @@ endfunction
 "                                   cursor
 " The example above would not work
 function! OCamlUnComment()
+  let saved_unnamed_register = @a 
 
   "select the entire comment including the start/end markers by 
   "searching first backward for the marker '(*' and then forward for the 
@@ -127,7 +128,9 @@ function! OCamlUnComment()
 
   "copy the selected content, delete the comment start and end markers, 
   "paste the comment content
-  execute "normal! \"hd\<esc>\<left>\<left>xxxx\"hP\<esc>"
+  execute "normal! \"ad\<esc>\<left>\<left>xxxx\"aP\<esc>"
+
+  let @a = saved_unnamed_register
 
 endfunction
 
