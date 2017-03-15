@@ -16,6 +16,7 @@ $(TARGETS)/apt:
                              libsnappy-dev   \
                              zlib1g-dev   \
                              libev-dev   \
+                             time \
                              libbz2-dev
 	touch $@
 

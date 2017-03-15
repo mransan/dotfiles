@@ -47,3 +47,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 if [ -f "$HOME/.bashrc.local" ]; then source "$HOME/.bashrc.local"; fi
+
+if [ -d "$HOME/.yarn/bin" ]; then 
+  export PATH="$HOME/.yarn/bin:$PATH"; 
+fi

@@ -45,6 +45,11 @@ nnoremap <leader>em :vnew ./Makefile<cr>
 
 nnoremap <leader>d( di(
 nnoremap <leader>d{ di{
+nnoremap <leader>k ggVGd 
+  "Empty the buffer"
+nnoremap <leader>ex ^v$<left>y<esc>:new<cr>:r!<c-r>"<cr>
+  "Shell execute the command on the line where the cursor is"
+
 
 " Code folding 
 " ------------
@@ -78,8 +83,8 @@ nnoremap <leader>p :cN<cr>
 
 set tw=0 wrapmargin=0
 
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+" execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
@@ -154,3 +159,15 @@ augroup filetype_vim
   autocmd FileType vim setlocal foldmethod=marker
 augroup end 
 " }}}
+
+" Javascript specific stuff {{{
+" -----------------------------
+function! JsDev()
+  nnoremap <leader>t :!yarn test<cr>
+  nnoremap <leader>s :!yarn start<cr>
+endfunction
+
+augroup js
+  autocmd!
+  autocmd BufReadPre .babelrc setlocal filetype=json
+augroup end 
