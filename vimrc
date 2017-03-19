@@ -4,6 +4,10 @@ filetype plugin indent on
 set colorcolumn=80
 set number
 
+" Make sure that autocompletion for files on disk works like in bash
+set wildmode=longest,list,full
+set wildmenu
+
 " Status line 
 " -----------
 set laststatus=2
