@@ -164,11 +164,13 @@ augroup filetype_vim
 augroup end 
 " }}}
 
+"
 " Javascript specific stuff {{{
 " -----------------------------
 function! JsDev()
-  nnoremap <leader>t :!yarn test<cr>
-  nnoremap <leader>s :!yarn start<cr>
+  nnoremap <leader>t :!npm run test<cr>
+  nnoremap <leader>s :!npm run start<cr>
+  nnoremap <leader>b :!npm run build<cr>
 endfunction
 
 augroup js
