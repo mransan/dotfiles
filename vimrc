@@ -1,5 +1,8 @@
-syntax on
 colorscheme torte
+syntax on
+highlight Comment ctermfg=6
+highlight Pmenu ctermbg=7 ctermfg=0
+highlight PmenuSel ctermbg=0 ctermfg=white
 filetype plugin indent on
 set colorcolumn=80
 set number
