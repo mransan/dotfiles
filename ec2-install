@@ -74,6 +74,7 @@ sudo  yum install tree
 # if not then generated using the 2 command below
 
 ssh-keygen -t rsa -b 4096 -C "maxime.ransan@gmail.com" 
+eval $(ssh-agent) 
 ssh-add ~/.ssh/id_rsa 
 
 # Copy content of public key: ~/.ssh/id_rsa.pub to 
