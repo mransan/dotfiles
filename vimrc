@@ -11,7 +11,7 @@ set number
 set wildmode=longest,list,full
 set wildmenu
 
-" Status line 
+" Status line
 " -----------
 set laststatus=2
 set ruler
@@ -31,6 +31,11 @@ set expandtab
 set linebreak
 set wrap
 
+" Fuzzy Buffer Plugin
+" ------------------
+
+cnoremap fb<Space> FufBuffer<CR>
+cnoremap ff<Space> FufFile<CR>
 
 " Key Mappings
 " ------------
@@ -48,17 +53,17 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>eb :vnew $HOME/.bashrc<cr>
   "Edit bashrc
 nnoremap <leader>em :vnew ./Makefile<cr>
-  "Edit project Makefile 
+  "Edit project Makefile
 
 nnoremap <leader>d( di(
 nnoremap <leader>d{ di{
-nnoremap <leader>k ggVGd 
+nnoremap <leader>k ggVGd
   "Empty the buffer"
 nnoremap <leader>ex ^v$<left>y<esc>:new<cr>:r!<c-r>"<cr>
   "Shell execute the command on the line where the cursor is"
 
 
-" Code folding 
+" Code folding
 " ------------
 nnoremap <leader>of :set foldlevel=99<cr>
 nnoremap <leader>cf :set foldlevel=-1<cr>
@@ -81,9 +86,19 @@ nnoremap gdf :!git difftool<cr>
 
 " Grep
 " ----
-nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " src"<cr>:copen<cr> 
+nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " src"<cr>:copen<cr>
 nnoremap <leader>n :cn<cr>
 nnoremap <leader>p :cN<cr>
+
+function! RemoveTraillingSpaces()
+  let saved_search = @/
+  execute "normal! \<esc>:%s/ *$//g\<cr>``"
+  let @/ = saved_search
+endfunction
+
+nnoremap <leader>f :call RemoveTraillingSpaces()<cr>
+
+nnoremap <leader>d ^wv$<left>y:!hg vimdiff <c-r>"<cr><down>
 
 "autocmd BufWritePre * :%s/ *$//g
   "Remove all the trailing spaces upon closing the file
@@ -97,48 +112,43 @@ augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
 augroup end
 
-" Fuzzy Buffer Plugin
-" ------------------
 
-cmap fb<Space> FufBuffer<CR>
-cmap ff<Space> FufFile<CR>
-
-" Wraps the current selection with the start/end OCaml comment markers, 
+" Wraps the current selection with the start/end OCaml comment markers,
 " ie '(*' and '*)'
 function! OCamlComment()
-  "the logic is to go first at the end of the section, insert the 
-  "end marker, go to the beginning of the selection and insert the 
-  "start marker. 
+  "the logic is to go first at the end of the section, insert the
+  "end marker, go to the beginning of the selection and insert the
+  "start marker.
   "
-  "Note that it's important to insert first the end marker so as not to 
-  "corrupt the location of the start of the selection (ie '`<') 
+  "Note that it's important to insert first the end marker so as not to
+  "corrupt the location of the start of the selection (ie '`<')
   execute "normal! \<esc>`>a*)\<esc>`<i(*\<esc>"
 endfunction
 
-" Remove the closest start and end OCaml comment markers from the 
-" cursor location. 
+" Remove the closest start and end OCaml comment markers from the
+" cursor location.
 "
-" Note that this function does not handle correctly nested comments. 
+" Note that this function does not handle correctly nested comments.
 "
 "          (* blah blah (* foo foo *) blah *)
 "                                     ^
 "                                   cursor
 " The example above would not work
 function! OCamlUnComment()
-  let saved_unnamed_register = @a 
+  let saved_unnamed_register = @a
 
-  "select the entire comment including the start/end markers by 
-  "searching first backward for the marker '(*' and then forward for the 
-  "'*)' marker. 
+  "select the entire comment including the start/end markers by
+  "searching first backward for the marker '(*' and then forward for the
+  "'*)' marker.
   "
-  "Note that this methodology is not robust enough to handle nested 
+  "Note that this methodology is not robust enough to handle nested
   "comments.
   execute "normal! ?(\\*\<cr>v/\\*)\<cr>\<right>\<esc>"
 
   "select the content of the comment (excluding the start/end markers)
   execute "normal!  `<\<right>\<right>v`>\<left>\<left>"
 
-  "copy the selected content, delete the comment start and end markers, 
+  "copy the selected content, delete the comment start and end markers,
   "paste the comment content
   execute "normal! \"ad\<esc>\<left>\<left>xxxx\"aP\<esc>"
 
@@ -154,17 +164,17 @@ augroup filetype_ocaml
   autocmd FileType ocaml :iabbrev <buffer> iif if<cr><c-d>then begin<cr>end<cr>else begin<cr>end<up><up><up><up>
   autocmd FileType ocaml :iabbrev <buffer> --> -> begin <cr>end<up><esc>$i
   autocmd FileType ocaml setlocal foldmethod=indent
-  autocmd FileType ocaml setlocal foldlevel=99 
+  autocmd FileType ocaml setlocal foldlevel=99
   autocmd FileType ocaml :vnoremap <buffer> <leader>c :<c-u>call OCamlComment()<cr>
   autocmd FileType ocaml :nnoremap <buffer> <leader>x :<c-u>call OCamlUnComment()<cr>
-augroup end 
+augroup end
 "}}}
 
 " Vim filetype setting {{{
-augroup filetype_vim 
+augroup filetype_vim
   autocmd!
   autocmd FileType vim setlocal foldmethod=marker
-augroup end 
+augroup end
 " }}}
 
 "
@@ -179,4 +189,4 @@ endfunction
 augroup js
   autocmd!
   autocmd BufReadPre .babelrc setlocal filetype=json
-augroup end 
+augroup end
