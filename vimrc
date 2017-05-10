@@ -1,9 +1,28 @@
 colorscheme torte
 syntax on
 highlight Comment ctermfg=6
+highlight Include ctermfg=6
+highlight PreProc ctermfg=6
+
+" Module name along with sig/struct/end
+highlight ocamlModule ctermfg=2
+" Those should, but don't work
+highlight link ocamlEnd Keyword
+highlight link ocamlStruct Keyword
+highlight link ocamlEndSync Keyword
+highlight link ocamlStructSync Keyword
+" Module parameter paranthesis
+highlight ocamlModParam ctermfg=3
+
+" Module path for a type
+highlight ocamlModPath ctermfg=2
+highlight ocamlFullMod ctermfg=2
+highlight ocamlWith ctermfg=7
+
 highlight Pmenu ctermbg=7 ctermfg=0
 highlight PmenuSel ctermbg=0 ctermfg=white
-filetype plugin indent on
+
+" filetype plugin indent on
 set colorcolumn=80
 set number
 
