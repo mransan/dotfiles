@@ -175,6 +175,14 @@ function! OCamlUnComment()
 
 endfunction
 
+
+" Markdown specific stuf {{{
+" ------------------------
+augroup filetype_markdown
+  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown 
+augroup end 
+" }}}
+
 " OCaml specific stuf {{{
 " ------------------------
 augroup filetype_ocaml
