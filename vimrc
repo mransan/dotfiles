@@ -1,8 +1,26 @@
 colorscheme torte
 syntax on
+
+" Highlighting setup
+" ------------------
+
+function! <SID>SynStack()
+  " This function prints the highlight group name that is applied to the 
+  " item under the cursor. 
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+nmap <leader>sp :call <SID>SynStack()<CR>
+
+" Those modifier makes changes the default dark blue color which is
+" unreadable in black background.
 highlight Comment ctermfg=6
 highlight Include ctermfg=6
 highlight PreProc ctermfg=6
+highlight markdownLinkText ctermfg=6 
 
 " Module name along with sig/struct/end
 highlight ocamlModule ctermfg=2
