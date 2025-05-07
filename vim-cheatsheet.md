@@ -1,3 +1,7 @@
+Manual Patches
+-------------
+* [Fuzzy buffer fix to prevent switching windows](https://github.com/vim-scripts/FuzzyFinder/pull/2)
+
 Options Postfix
 --------------
 
